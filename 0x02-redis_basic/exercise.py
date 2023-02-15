@@ -6,6 +6,7 @@ import redis
 import uuid
 from functools import wraps
 
+
 def call_history(method: Callable) -> Callable:
     """ store the history of inputs and outputs for a particular function """
     key = method.__qualname__
@@ -21,6 +22,7 @@ def call_history(method: Callable) -> Callable:
         return data
     return wrapper
 
+
 def count_calls(method: Callable) -> Callable:
     """ to count how many times methods of the Cache class are called """
     key = method.__qualname__
@@ -31,6 +33,7 @@ def count_calls(method: Callable) -> Callable:
         self._redis.incr(key)
         return method(self, *args, **kwds)
     return wrapper
+
 
 class Cache:
     """ class """
@@ -72,6 +75,7 @@ class Cache:
         except Exception:
             data = 0
         return data
+
 
 def replay(method: Callable):
     """ display the history of calls of a particular function """
